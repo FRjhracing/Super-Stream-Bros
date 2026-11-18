@@ -1,5 +1,9 @@
 # Super Stream Bros
 
+> The most sophisticated tool set for hosting OFFLINE Melee and Ultimate tournaments. Automates the packaging
+> and organization of Slippi replays into Lucky Stats-ready zips. Manage the start.gg bracket and set up dynamic
+> overlays. Large scale tournament management via LAN ★. The only thing it can't do is run the tournament for you...
+
 **From a Smash bracket night to a finished VOD library with stats, in one tool set.** Run the start.gg bracket
 and the stream overlay from browser/OBS docks, collect the Slippi replays from every setup, cut the stream and
 the off-stream replays into one YouTube video per set (plus a Full VOD per setup), and publish every set with
