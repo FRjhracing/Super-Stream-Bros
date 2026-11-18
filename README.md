@@ -1,2 +1,2 @@
 # Super-Stream-Bros
-The most sophisticated tool set for TO'ing OFFLINE melee and ultimate tournaments. Package and organized Slippi replays into luckystats ready zips.  Manage start.gg bracket and setup dynamic overlays. Large scale tournament management via LAN 
+The most sophisticated tool set for hosting OFFLINE melee and ultimate tournaments. Automates the packaging and organization of Slippi replays into luckystats ready zips. Manage start.gg bracket and setup dynamic overlays. Large scale tournament management via LAN. The only thing it cant do is run the tournament for you... 
