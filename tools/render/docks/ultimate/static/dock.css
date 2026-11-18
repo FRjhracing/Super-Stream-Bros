@@ -1,0 +1,173 @@
+:root {
+  --bg: #080b10;
+  --panel: #111821;
+  --line: #22303f;
+  --text: #f2f2f2;
+  --muted: #8a94a0;
+  --accent: #5cc8ff;
+  --accent-ink: #0a0a0a;
+  --danger: #ff6b6b;
+  --playing: #4da3ff;
+  --called: #ffb84d;
+  --s1: #ff8a3d;   /* Stream 1 = main OBS */
+  --s2: #b48cff;   /* Stream 2 = portable OBS */
+  --seed: #ffc83d; /* top-3 seed outline on waiting sets */
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--text); font: 13px/1.35 "Segoe UI", Arial, sans-serif; }
+body { padding-bottom: 24px; }
+button, input, select {
+  font: inherit; color: var(--text); background: #1a222c; border: 1px solid var(--line);
+  border-radius: 4px; padding: 4px 8px;
+}
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+button.accent { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button.danger { border-color: var(--danger); color: var(--danger); }
+button.dim { opacity: .45; }
+input { width: 100%; min-width: 0; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small { font-size: 11px; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 6px; }
+h2.inline { display: inline; }
+
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 6px 8px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+.title { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; }
+.title strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.title select { padding: 1px 4px; font-size: 11px; max-width: 260px; }
+.bar-actions { display: flex; align-items: center; gap: 4px; }
+.status { margin: 6px 8px 0; padding: 6px 8px; border-radius: 4px; background: #222; }
+.status.error { background: #3a1414; color: #ffb3b3; }
+.status.ok { background: #0e2433; color: var(--accent); }
+
+.panel { margin: 8px; padding: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.panel label { display: block; margin-bottom: 6px; }
+.panel label select { display: block; width: 100%; margin-top: 2px; }
+.row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.row > button { flex: 1; }
+.settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 8px 16px; }
+
+/* The two recordings, side by side (stacked when the dock is narrow). */
+.streams { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 8px; margin: 8px; }
+.stream-card { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--sc); border-radius: 6px; padding: 8px; display: flex; flex-direction: column; }
+.stream-card.s1 { --sc: var(--s1); }
+.stream-card.s2 { --sc: var(--s2); }
+.stream-card h2 { color: var(--sc); margin: 0; font-size: 13px; }
+.sc-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rec { font-size: 11px; color: var(--muted); }
+.rec.on { color: #ff5c5c; font-weight: 600; }
+.sc-body { flex: 1; margin-top: 4px; min-height: 52px; }
+.sc-vs { font-size: 16px; font-weight: 600; }
+.sc-empty { padding-top: 12px; }
+
+/* Bracket: as many columns as the dock width allows. */
+.sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 6px; }
+.set { border: 1px solid var(--line); border-left: 3px solid var(--line); border-radius: 4px; padding: 6px; }
+.set.topseed, .bset.topseed { outline: 2px solid var(--seed); outline-offset: 1px; }
+.set.st-2 { border-left-color: var(--playing); }
+.set.st-6 { border-left-color: var(--called); }
+.set.on.s1 { border-left-color: var(--s1); box-shadow: inset 0 0 0 1px var(--s1); }
+.set.on.s2 { border-left-color: var(--s2); box-shadow: inset 0 0 0 1px var(--s2); }
+.set .meta { display: flex; justify-content: space-between; gap: 6px; font-size: 11px; color: var(--muted); }
+.set .vs { margin: 2px 0 4px; display: grid; grid-template-columns: 1fr auto; gap: 0 8px; font-size: 14px; }
+.set .vs .win { color: var(--accent); }
+.set .acts { display: flex; flex-wrap: wrap; gap: 4px; }
+.set .acts button { padding: 3px 8px; font-size: 12px; }
+.acts button.s1 { border-color: var(--s1); color: var(--s1); font-weight: 600; }
+.acts button.s2 { border-color: var(--s2); color: var(--s2); font-weight: 600; }
+.acts button.s1.cur { background: var(--s1); color: #000; }
+.acts button.s2.cur { background: var(--s2); color: #000; }
+
+.badge { padding: 0 5px; border-radius: 3px; font-size: 10px; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+.badge.s1 { background: var(--s1); color: #000; }
+.badge.s2 { background: var(--s2); color: #000; }
+.badge.b2 { background: var(--playing); color: #000; }
+.badge.b6 { background: var(--called); color: #000; }
+.badge.b1, .badge.b4, .badge.b7 { background: #2a3440; }
+.badge.other { background: #2a3440; color: var(--muted); text-transform: none; font-weight: 400; }
+
+/* Timestamp log */
+.log-actions { margin: 6px 0; }
+.log-actions button { flex: none; }
+.log { display: flex; flex-direction: column; max-height: 260px; overflow: auto; }
+.log-row { display: grid; grid-template-columns: 82px 72px 64px 1fr auto; gap: 8px; align-items: center; padding: 2px 0; border-bottom: 1px solid var(--line); }
+.log-row .vid { font-variant-numeric: tabular-nums; color: var(--accent); }
+.log-row.ev-rec_start .txt { color: #ff5c5c; }
+.log-row.ev-set_end .txt { color: var(--muted); }
+.log-row .x { padding: 0 6px; font-size: 11px; color: var(--muted); }
+
+summary { cursor: pointer; list-style: none; }
+summary::before { content: "▸ "; color: var(--accent); }
+details[open] summary::before { content: "▾ "; }
+details .sets { margin-top: 6px; }
+
+dialog { margin: auto; background: var(--panel); color: var(--text); border: 1px solid var(--accent); border-radius: 6px; padding: 10px; width: min(380px, 94vw); }
+dialog::backdrop { background: rgba(0,0,0,.6); }
+.dlg-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.dlg-head button { padding: 0 6px; }
+.rep-grid { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; margin: 8px 0; }
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper b { font-size: 20px; min-width: 20px; text-align: center; }
+.stepper button { width: 30px; height: 28px; padding: 0; }
+#confirm-text { margin-bottom: 8px; white-space: pre-line; }
+
+/* Setups */
+:root { --setup: #3dd68c; }  /* on an unrecorded setup */
+input.narrow { width: 80px; display: block; margin-top: 2px; }
+.setup-settings { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 8px; }
+.setup-names { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 4px; margin-bottom: 8px; }
+.set.onsetup { border-left-color: var(--setup); }
+.badge.setup { background: var(--setup); color: #000; text-transform: none; }
+.acts button.setup.cur { border-color: var(--setup); color: var(--setup); font-weight: 600; }
+.setup-list { display: flex; flex-direction: column; gap: 4px; }
+.setup-list button { display: flex; justify-content: space-between; align-items: center; gap: 8px; text-align: left; }
+.setup-list button.rec.s1 strong { color: var(--s1); }
+.setup-list button.rec.s2 strong { color: var(--s2); }
+.setup-list button.sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.setup-list button.busy span { color: var(--called); }
+.setup-pick { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.setup-pick select { flex: 1; }
+
+/* Characters */
+.set .vs .chars { font-size: 11px; color: var(--text); opacity: .85; }
+.set .vs .chars.muted { color: var(--muted); opacity: 1; }
+.char-block { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.char-row { display: grid; grid-template-columns: minmax(70px, 30%) 1fr; gap: 4px 6px; align-items: center; }
+.char-name { font-weight: 600; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.chip { padding: 1px 6px; font-size: 12px; border-color: var(--accent); }
+/* "+" right after the chips: a list that only shows "+" until opened. */
+.char-add { width: auto; max-width: 34px; padding: 1px 4px; font-size: 13px; font-weight: 700; color: var(--accent);
+  border-color: var(--accent); appearance: none; text-align: center; cursor: pointer; }
+.char-add:only-child { max-width: none; font-weight: 400; font-size: 12px; }
+.char-add option, .char-add optgroup { color: var(--text); background: var(--panel); font-weight: 400; text-align: left; }
+.status.warn { background: #3a2e0a; color: #ffe08a; }
+.setup-pick { flex-wrap: wrap; }
+
+/* Touch sizing: every window (set actions, setup picker, report, confirm, characters) uses the
+   same scale: 16px text, 56px buttons. Always on (a touch screen as second monitor doesn't
+   reliably report a touch pointer). */
+dialog { width: min(480px, 94vw); padding: 14px; border-radius: 10px; font-size: 16px; }
+dialog button { min-height: 56px; font-size: 16px; touch-action: manipulation; }
+dialog select { min-height: 48px; font-size: 16px; }
+dialog .row { gap: 8px; margin-top: 10px; }
+.dlg-head { margin-bottom: 10px; font-size: 17px; }
+.dlg-head button { min-width: 48px; min-height: 48px; padding: 0; font-size: 18px; }
+dialog .muted.small { font-size: 13px; }
+#confirm-text { font-size: 17px; line-height: 1.45; margin-bottom: 12px; }
+.setup-list { gap: 8px; }
+.setup-list button { padding: 8px 14px; }
+.setup-list button .small { font-size: 13px; text-align: right; }
+.setup-list button strong { white-space: nowrap; }
+.rep-grid { gap: 12px; margin: 12px 0; font-size: 18px; }
+.stepper { gap: 12px; }
+.stepper b { font-size: 30px; min-width: 30px; }
+.stepper button { width: 60px; height: 56px; font-size: 24px; }
+dialog .char-block { margin-top: 10px; }
+dialog .char-row { gap: 8px 10px; margin-top: 8px; }
+dialog .chips { gap: 8px; }
+dialog .chip { min-height: 44px; padding: 4px 14px; font-size: 15px; }
+dialog .char-add { min-height: 44px; max-width: 56px; padding: 4px 10px; font-size: 18px; }
+dialog .char-add:only-child { max-width: none; font-size: 15px; }

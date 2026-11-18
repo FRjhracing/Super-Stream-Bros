@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSB:Active Bracket</title>
+<link rel="stylesheet" href="/static/dock.css">
+<link rel="stylesheet" href="/static/bracket.css">
+<link rel="stylesheet" href="/static/active.css">
+</head>
+<body class="bracket-page active-page">
+<header class="bar">
+  <div class="title">
+    <strong id="t-name">Active Bracket</strong>
+    <span id="counts" class="muted small"></span>
+  </div>
+  <div class="bar-actions">
+    <span id="updated" class="muted"></span>
+    <button id="btn-refresh" title="Refresh">↻</button>
+  </div>
+</header>
+<div id="status" class="status hidden"></div>
+
+<main id="board" class="board"><p class="muted pad">Loading…</p></main>
+
+<!-- Tap a set: its actions open here (same window as the Full Bracket). -->
+<dialog id="set-dialog" class="set-dialog">
+  <div class="dlg-head">
+    <span class="sd-head"><strong id="sd-letter" class="letter"></strong><span id="sd-badge"></span><span id="sd-round" class="muted"></span></span>
+    <button id="sd-close" class="sd-close" title="Close">✕</button>
+  </div>
+  <div id="sd-players" class="sd-players"></div>
+  <p id="sd-meta" class="muted small"></p>
+  <div id="sd-buttons" class="sd-buttons"></div>
+</dialog>
+
+<script src="/static/common.js"></script>
+<script src="/static/active.js"></script>
+</body>
+</html>

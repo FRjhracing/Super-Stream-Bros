@@ -1,0 +1,59 @@
+{
+  "_about": "PROTOCOL* #60's real config (2026-11-16), as an example (*PROTOCOL = the series this was built for: replace its tournament slug, title, stream name and setup names with yours). Most of it the autopilot writes itself; the per-set entries are hand fixes with their reasons. See docs\\Config reference.md.",
+  "tournament": "protocol-60",
+  "title": "PROTOCOL #60",
+  "recording": "{ssd}/MeleeRecordings/Protocol-60/2026-11-16 19-28-48.mp4",
+  "replays": "replays",
+  "stream_setup": "Main Setup",
+  "stream_name": "frjhracing",
+  "overlay_stream": true,
+  "clock_offset_s": {
+    "_notes": "2026-11-17. Main Setup -2 s from the in-game timer on stream (E g1 GO at 5:48.8, I/J game 4 GO at 1:43:43.6; video_t = GO). Big Tv: Wii year still 2025, time of day right (fits every dock window). BZimm Setup +80 s and BJH 0 from the dock windows (BZimm: 48..119 s fit D and F; BJH: -68..~+30). User set all Wii clocks the night of.",
+    "Main Setup": -2,
+    "Big Tv": {
+      "wii": "2025-11-16 20:00:00",
+      "laptop": "2026-11-16 20:00:00"
+    },
+    "BZimm Setup": 80,
+    "BJH": 0
+  },
+  "dock_setups": {
+    "_note": "Setup 3 was renamed BJH during set A",
+    "Setup 3": "BJH",
+    "Bzimm's Setup": "BZimm Setup",
+    "Big TV": "Big Tv"
+  },
+  "sets": {
+    "I": {
+      "games": [
+        "Game_001BEADF2C48_20261116T210356.slp",
+        "Game_001BEADF2C48_20261116T210659.slp",
+        "Game_001BEADF2C48_20261116T210955.slp"
+      ],
+      "_note": "GF and reset were played back to back (dock put J on at 21:22, after all 6 games). I = first three (Uncle B Fox)."
+    },
+    "J": {
+      "games": [
+        "Game_001BEADF2C48_20261116T211229.slp",
+        "Game_001BEADF2C48_20261116T211601.slp",
+        "Game_001BEADF2C48_20261116T211835.slp"
+      ],
+      "_note": "Reset = last three (Uncle B Sheik, Falco, Fox)."
+    },
+    "E": {
+      "replay_games": "all",
+      "_note": "No stream audio until 24:08 in the recording (OBS): all 3 games from the replays over the stream, webcam live."
+    },
+    "G": {
+      "replay_games": [
+        1
+      ],
+      "_note": "Stream audio comes back 24:08, ~17 s into game 1: game 1 from its replay."
+    }
+  },
+  "drive_folder": "Protocol #60",
+  "dock_log": "dock/setups.jsonl",
+  "luckystats": {
+    "_event": "https://luckystats.gg/event/323683"
+  }
+}

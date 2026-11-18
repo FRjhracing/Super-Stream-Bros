@@ -1,0 +1,8 @@
+{
+  "_about": "Copy to machine_settings.json in the package root. Key = this PC's name (echo %COMPUTERNAME%).",
+  "YOUR-PC-NAME": {
+    "iso": "D:\\Games\\Melee\\Super Smash Bros. Melee (USA) (En,Ja) (Rev 2).iso",
+    "render_speed": 4.0,
+    "_notes": "Vanilla NTSC 1.02 (MD5 0e63d4223b01d9aba596259dc155a174). render_speed is a ceiling; check the in-game timer of a rendered game is frame-exact, lower it if not."
+  }
+}

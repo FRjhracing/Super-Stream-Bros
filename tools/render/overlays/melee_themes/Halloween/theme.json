@@ -1,0 +1,19 @@
+{
+  "name": "Halloween",
+  "note": "First used for PROTOCOL #57 (2026-10-26). Round names: left = start.gg's name, right = what goes on stream. {n} = the round number. 'Losers Top 8' is the losers round with 4 players left (found from the bracket). finalsLabel tags the last rounds in the bracket overview: finalsFrom 4 = Winners Final, Losers Semis/Final, Grand Final; 8 = from Winners Semis / Losers top 8.",
+  "finalsLabel": "Final Haunt",
+  "finalsFrom": 4,
+  "rounds": {
+    "Winners Round {n}": "Survivors Round {n}",
+    "Winners Quarter-Final": "Survivors Quarters",
+    "Winners Semi-Final": "Survivors Semis",
+    "Winners Final": "Survivors Final",
+    "Losers Round {n}": "Graveyard Round {n}",
+    "Losers Top 8": "Graveyard Top 8",
+    "Losers Quarter-Final": "Graveyard Quarters",
+    "Losers Semi-Final": "Graveyard Semis",
+    "Losers Final": "Graveyard Final",
+    "Grand Final": "Grand Fright",
+    "Grand Final Reset": "Grand Fright Reset"
+  }
+}

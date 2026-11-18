@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stream PC Setup</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1c2230; --muted:#5b6475; --accent:#2f6fdb; --line:#dde2ea; --code:#eef1f6; --done:#2e9d5b; --warn:#b26a00; --stream:#ae3ec9; --opt:#868e96; --box:#f1f3f7;
+          --c-file:#2f9e44; --c-data:#1c7ed6; --c-media:#ae3ec9; --c-net:#e8590c; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#12161f; --card:#1b212d; --text:#e6e9ef; --muted:#9aa3b5; --accent:#6d9cff; --line:#2c3445; --code:#252d3c; --done:#4cc47f; --warn:#e0a03a; --stream:#d07be6; --opt:#8d96a3; --box:#222a38;
+          --c-file:#4cc47f; --c-data:#6d9cff; --c-media:#d07be6; --c-net:#ff8a3d; } }
+  :root[data-theme="dark"] { --bg:#12161f; --card:#1b212d; --text:#e6e9ef; --muted:#9aa3b5; --accent:#6d9cff; --line:#2c3445; --code:#252d3c; --done:#4cc47f; --warn:#e0a03a; --stream:#d07be6; --opt:#8d96a3; --box:#222a38;
+          --c-file:#4cc47f; --c-data:#6d9cff; --c-media:#d07be6; --c-net:#ff8a3d; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, "Segoe UI", sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 30px 0 8px; }
+  h3 { font-size: 15px; margin: 14px 0 6px; display:flex; gap:8px; align-items:center; flex-wrap: wrap; }
+  .sub { color: var(--muted); margin: 0 0 14px; max-width: 800px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+  .where { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--stream); color: #fff; }
+  .where.opt { background: var(--opt); } .where.both { background: var(--done); } .where.render { background: var(--accent); }
+  label { display: flex; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; }
+  label:first-of-type { border-top: 0; }
+  input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; flex: none; accent-color: var(--done); }
+  label > span { min-width: 0; }
+  input:checked + span { color: var(--muted); text-decoration: line-through; }
+  code { background: var(--code); padding: 1px 6px; border-radius: 4px; font: 13px Consolas, monospace; word-break: break-word; }
+  pre { background: var(--code); padding: 10px 12px; border-radius: 8px; font: 13px/1.45 Consolas, monospace; overflow-x: auto; margin: 8px 0; }
+  a { color: var(--accent); }
+  .note { color: var(--warn); font-size: 13px; margin: 8px 0 0; }
+  .muted { color: var(--muted); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; border-top: 0; }
+  .wrap { overflow-x: auto; }
+  nav { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 8px; }
+  nav a { font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 99px; padding: 2px 10px; background: var(--card); }
+  button { font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer; }
+  svg text { font-family: system-ui, "Segoe UI", sans-serif; }
+  .diagram { width: 100%; height: auto; display: block; }
+  figure { margin: 0; }
+  figure img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); background: #0b0d12; }
+  figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .shots { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 14px; align-items: start; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  .obs { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  @media (max-width: 760px) { .shots, .two, .obs { grid-template-columns: 1fr; } }
+  .chip { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+  .c-file { background: var(--c-file); } .c-data { background: var(--c-data); } .c-media { background: var(--c-media); }
+  .beta { display:inline-block; font-size:11px; font-weight:700; line-height:1.5; padding:0 7px; border-radius:99px; border:1px solid var(--warn, #b26a00); color:var(--warn, #b26a00) !important; text-decoration:none; vertical-align:2px; white-space:nowrap; margin-left:4px; }
+  .beta-note { font-size:13px; color:var(--muted); border-left:3px solid var(--warn, #b26a00); padding:4px 10px; margin:0 0 14px; max-width:820px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Stream PC: dock, OBS and themes</h1>
+  <p class="sub">The night-of side: the Melee dock runs the bracket and writes the overlay files, OBS shows them and records,
+    themes change the look for special weeks, and the Wiis save every game. Every screenshot here is the real dock and the
+    real OBS running on the package's <b>generic sample art</b> and a made-up bracket. Ticks are saved in this browser
+    (<button id="reset">clear</button>).</p>
+  <p class="beta-note"><span class="beta" style="margin:0 4px 0 0">&#9733; beta</span> = used at our events but not thoroughly tested yet. Found a bug or something unclear? <a href="https://github.com/FRjhracing/Super-Stream-Bros/issues">Open an issue on GitHub</a> (FRjhracing).</p>
+  <p class="muted" style="margin:-6px 0 10px">Bigger event with several TOs, tablets, bracket screens or more than one stream? <a href="06%20LAN%20and%20multi-TO%20events.html">Guide 6: LAN and multi-TO events</a> <a class="beta" href="https://github.com/FRjhracing/Super-Stream-Bros/issues" title="Not thoroughly tested yet: please report bugs and issues on GitHub">&#9733; beta</a>.</p>
+  <nav><a href="#how">How it fits</a><a href="#dock">Dock</a><a href="#pages">Pages</a><a href="#obs">OBS</a><a href="#themes">Themes</a><a href="#art">Your art</a><a href="#wii">Wiis</a><a href="#ult">Ultimate</a><a href="#after">After the night</a><a href="#trouble">Troubleshooting</a></nav>
+
+  <h2 id="how">How it fits together</h2>
+  <section>
+    <svg class="diagram" viewBox="0 0 1000 420" role="img" aria-label="start.gg feeds the dock server; the dock pages control it; the dock writes overlay files that OBS shows; the themes folder and layout.json feed the dock, OBS and the VOD renderer; the setup log goes to the SSD">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+      <rect x="20" y="20" width="200" height="70" rx="12" fill="var(--box)" stroke="var(--c-net)" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="36" y="48" font-size="15" font-weight="700" fill="var(--c-net)">start.gg</text>
+      <text x="36" y="70" font-size="12" fill="var(--muted)">bracket, players, pictures</text>
+      <rect x="20" y="130" width="200" height="120" rx="12" fill="var(--box)" stroke="var(--c-data)" stroke-width="2"/>
+      <text x="36" y="158" font-size="15" font-weight="700" fill="var(--c-data)">Dock pages</text>
+      <text x="36" y="182" font-size="13" fill="var(--text)">Home  /</text>
+      <text x="36" y="202" font-size="13" fill="var(--text)">Full Bracket  /bracket</text>
+      <text x="36" y="222" font-size="13" fill="var(--text)">Active Bracket  /active</text>
+      <text x="36" y="240" font-size="11" fill="var(--muted)">browser tabs or OBS docks</text>
+      <rect x="290" y="70" width="230" height="150" rx="12" fill="var(--box)" stroke="var(--stream)" stroke-width="2"/>
+      <text x="306" y="98" font-size="15" font-weight="700" fill="var(--stream)">dock_server.py</text>
+      <text x="306" y="120" font-size="12" fill="var(--muted)">127.0.0.1:8765, STARTGG_TOKEN</text>
+      <text x="306" y="144" font-size="13" fill="var(--text)">dock_config.json</text>
+      <text x="306" y="164" font-size="13" fill="var(--text)">output\  (overlay files)</text>
+      <text x="306" y="184" font-size="13" fill="var(--text)">timestamps\&lt;slug&gt;\</text>
+      <text x="306" y="204" font-size="11" fill="var(--muted)">setups.jsonl = the setup log</text>
+      <rect x="600" y="20" width="380" height="110" rx="12" fill="var(--box)" stroke="var(--c-file)" stroke-width="2"/>
+      <text x="616" y="48" font-size="15" font-weight="700" fill="var(--c-file)">tools\render\overlays\melee_themes\</text>
+      <text x="616" y="72" font-size="13" fill="var(--text)">layout.json  (where everything goes)</text>
+      <text x="616" y="92" font-size="13" fill="var(--text)">Default\overlay.png, Halloween\, Winter\ ...</text>
+      <text x="616" y="112" font-size="11" fill="var(--muted)">theme.json: round names · overlay.png: the panel</text>
+      <rect x="600" y="170" width="180" height="110" rx="12" fill="var(--box)" stroke="var(--c-media)" stroke-width="2"/>
+      <text x="616" y="198" font-size="15" font-weight="700" fill="var(--c-media)">OBS</text>
+      <text x="616" y="220" font-size="12" fill="var(--text)">scene "SSB Stream"</text>
+      <text x="616" y="240" font-size="12" fill="var(--muted)">streams + records</text>
+      <text x="616" y="260" font-size="12" fill="var(--muted)">YYYY-MM-DD HH-MM-SS.mp4</text>
+      <rect x="800" y="170" width="180" height="110" rx="12" fill="var(--box)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="816" y="198" font-size="15" font-weight="700" fill="var(--accent)">Render PC</text>
+      <text x="816" y="220" font-size="12" fill="var(--text)">vod_overlay.py</text>
+      <text x="816" y="240" font-size="12" fill="var(--muted)">same layout + themes</text>
+      <text x="816" y="260" font-size="12" fill="var(--muted)">-&gt; VODs match stream</text>
+      <rect x="290" y="300" width="300" height="100" rx="12" fill="var(--box)" stroke="var(--done)" stroke-width="2"/>
+      <text x="306" y="328" font-size="15" font-weight="700" fill="var(--done)">SSD "Project Storage"</text>
+      <text x="306" y="350" font-size="13" fill="var(--text)">MeleeRecordings\Protocol-N\</text>
+      <text x="306" y="370" font-size="12" fill="var(--muted)">recording.mp4 + setups.jsonl, setups.csv,</text>
+      <text x="306" y="388" font-size="12" fill="var(--muted)">Setup times.txt</text>
+      <rect x="20" y="300" width="200" height="100" rx="12" fill="var(--box)" stroke="var(--stream)" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="36" y="328" font-size="15" font-weight="700" fill="var(--stream)">Wiis</text>
+      <text x="36" y="350" font-size="13" fill="var(--text)">Slippi Nintendont</text>
+      <text x="36" y="370" font-size="12" fill="var(--muted)">one labelled flash drive</text>
+      <text x="36" y="388" font-size="12" fill="var(--muted)">each -&gt; .slp replays</text>
+      <path d="M220 55 C 255 55, 255 100, 288 100" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <path d="M220 190 L 288 170" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <path d="M598 75 C 560 75, 560 110, 522 110" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="530" y="66" font-size="11" fill="var(--muted)">theme</text>
+      <path d="M520 170 L 598 210" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="530" y="208" font-size="11" fill="var(--muted)">output\</text>
+      <path d="M690 130 L 690 168" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="696" y="154" font-size="11" fill="var(--muted)">generator</text>
+      <path d="M890 130 L 890 168" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <path d="M405 220 L 405 298" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="412" y="262" font-size="11" fill="var(--muted)">handoff</text>
+      <path d="M640 280 C 640 330, 620 340, 592 340" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <path d="M592 370 C 760 370, 880 340, 880 282" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <path d="M220 360 C 250 360, 250 410, 288 395" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#ar)"/>
+    </svg>
+    <p class="muted" style="margin:6px 0 0">One <code>layout.json</code> drives three things: where OBS puts every source, where the VOD renderer
+      draws the same pieces, and how long a name may get before the dock shortens it. Change your layout once, regenerate,
+      and stream and VODs stay in step.</p>
+  </section>
+
+  <h2 id="dock">1. Melee dock (one time)</h2>
+  <section>
+    <h3><span class="where">Stream PC</span> Install and start</h3>
+    <label><input type="checkbox"><span>Python 3.14 from <a href="https://www.python.org/downloads/">python.org/downloads</a> (see <a href="01%20Install%20and%20setup.html">guide 1</a>). Nothing else to install for the dock.</span></label>
+    <label><input type="checkbox"><span>Double-click <code>tools\render\docks\melee\set_token.bat</code> and paste a start.gg token (start.gg &gt; profile picture &gt; Developer Settings &gt; Personal Access Tokens &gt; Create new token; the account must be an admin of your tournaments). It is saved as the Windows user variable <code>STARTGG_TOKEN</code>, not in a file.</span></label>
+    <label><input type="checkbox"><span>Double-click <code>start_dock.bat</code>. The window says <code>Super Stream Bros Melee dock running at http://127.0.0.1:8765/</code>, where the themes are, and whether a stream font was found. Leave it open all night (closing it stops the dock; nothing is lost).</span></label>
+    <label><input type="checkbox"><span>The first start writes <code>dock_config.json</code> next to <code>dock_server.py</code>. Close the dock window, open the file in Notepad and set your series' start.gg short link, then start the dock again:
+      <pre>"shortLink": "https://www.start.gg/YourSeries",</pre>
+      That is your series' short <code>start.gg/&lt;name&gt;</code> link, the one that always opens your newest tournament. No short link? Leave it empty and type the tournament slug in ⚙ instead (the part after <code>start.gg/tournament/</code>).</span></label>
+    <label><input type="checkbox"><span>Double-click <code>open_docks.bat</code>: it starts the dock if needed and opens the three pages in your browser. Or add them to OBS: <b>Docks &gt; Custom Browser Docks</b>, one row per page:
+      <table style="margin-top:6px"><tr><th>Dock name</th><th>URL</th></tr>
+        <tr><td>SSB Home</td><td><code>http://127.0.0.1:8765/</code></td></tr>
+        <tr><td>SSB Full Bracket</td><td><code>http://127.0.0.1:8765/bracket</code></td></tr>
+        <tr><td>SSB Active Bracket</td><td><code>http://127.0.0.1:8765/active</code></td></tr>
+        <tr><td><span class="muted">Ultimate (its own PC or the same one)</span></td><td><code>http://127.0.0.1:8766/</code>, <code>/bracket</code>, <code>/active</code></td></tr>
+      </table></span></label>
+  </section>
+
+  <section>
+    <div class="shots">
+      <figure><img src="images/dock_settings.png" alt="The dock's settings panel: tournament slug, Use latest (series link), our stream on start.gg, three setups, setup on stream, Seasonal theme Halloween with themed round names and overlay graphic ticked, dock colours"><figcaption>⚙ on Home. Here Halloween is picked: the orange badge in the header shows a theme is on.</figcaption></figure>
+      <div>
+        <h3><span class="where">Stream PC</span> Settings in ⚙ (kept week to week)</h3>
+        <label><input type="checkbox"><span><b>Use latest (series link)</b> each week, or a slug + <b>Load slug</b>. The title bar shows the tournament.</span></label>
+        <label><input type="checkbox"><span><b>Our stream on start.gg</b>: Put on stream also assigns the set to this stream on start.gg (shows on the bracket for viewers). Create the stream in start.gg's admin first.</span></label>
+        <label><input type="checkbox"><span><b>Number of setups</b> and a name for each. The first is always <b>Main Setup</b>. Use the same names as the flash drive folders on the render PC, so the logs and the replays match.</span></label>
+        <label><input type="checkbox"><span><b>Setup on stream</b>: the setup OBS captures. Put on stream puts the set on it too.</span></label>
+        <label><input type="checkbox"><span><b>Seasonal theme</b> (see <a href="#themes">Themes</a>) and <b>Dock colours</b> (presets or your own accent/panel colour; only the dock pages, not the stream).</span></label>
+        <p class="muted">Only in <code>dock_config.json</code>: <code>shortLink</code>, <code>themesFolder</code> (empty = <code>tools\render\overlays\melee_themes</code>), <code>pollSeconds</code>. Full list: <code>tools\render\docks\melee\README.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <h2 id="pages">2. The three pages</h2>
+  <section>
+    <div class="shots">
+      <figure><img src="images/dock_home.png" alt="Home page: On stream panel with two players, character buttons, scores, round and Bo5, Update overlay / Report / Clear; bracket list with LIVE, CALLED and WAITING sets and their buttons"><figcaption>Home (<code>/</code>): the On stream panel drives the overlay; below it every open set, live first.</figcaption></figure>
+      <div>
+        <table>
+          <tr><th>Button</th><th>Does</th></tr>
+          <tr><td><b>Put on stream</b></td><td>Loads the set into the overlay (names, pictures, round, characters from last time), assigns it to our start.gg stream, marks it in progress and logs it on the stream setup. Badge turns <b>LIVE</b>.</td></tr>
+          <tr><td><b>Put on setup…</b></td><td>Pick the setup the players sat down at. Logs the start time (the VOD cutter needs it) and marks the set in progress. Picking the stream setup = Put on stream.</td></tr>
+          <tr><td><b>Call / Start</b></td><td>Same as on start.gg.</td></tr>
+          <tr><td><b>Report…</b></td><td>Score or DQ, sent to start.gg; ends the set's log entry. A set nobody put on a setup asks "On setup:" here.</td></tr>
+          <tr><td><b>Character</b> (On stream)</td><td>Picker with colours: sets the stock icon on stream. Remembered per player.</td></tr>
+          <tr><td><b>Update overlay / Clear</b></td><td>Writes what the panel shows / blanks it. Names can be typed over; a typed shorter name wins.</td></tr>
+          <tr><td><b>Recent results &gt; Reset</b></td><td>Re-opens a set (only if no later set started).</td></tr>
+        </table>
+        <p class="muted">"Shows: …" under a name = it was shortened to fit the OBS name box (prefix dropped, or cut with "…"). The overlay clears itself when the set on stream is reported, here or on start.gg.</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <figure><img src="images/dock_bracket.png" alt="Full Bracket page: tabs Full / Winners / Losers / Completed sets; winners and losers rows by round; set cards with DONE, LIVE, CALLED, WAITING and 'Winner of' / 'Loser of' placeholders"><figcaption>Full Bracket (<code>/bracket</code>): the whole event; tap a set for a window with the same buttons. Gold outline = a top-3 seed is waiting. Made for a touch screen.</figcaption></figure>
+  </section>
+  <section>
+    <figure><img src="images/dock_active.png" alt="Active Bracket page: per side only the round being played, a suggested 'Call #1', and sets that are ready early"><figcaption>Active Bracket (<code>/active</code>): only the rounds being played, a suggested call order (closest seeds first: they run longest) and sets that are "ready early".</figcaption></figure>
+  </section>
+
+  <h2 id="obs">3. OBS</h2>
+  <section>
+    <h3><span class="where">Stream PC</span> Build the scene from your layout</h3>
+    <label><input type="checkbox"><span>Install <a href="https://obsproject.com/download">OBS Studio</a>.</span></label>
+    <label><input type="checkbox"><span>Optional, for your own layout: copy <code>examples\melee_layout.example.json</code> to <code>tools\render\overlays\melee_themes\layout.json</code> and change the numbers (measure them on a 1920x1080 screenshot of your design). For the text font: install your stream font in Windows and set <code>"obs_font"</code>.</span></label>
+    <label><input type="checkbox"><span>Run <code>python tools\obs\make_obs_scenes.py</code>. It writes <code>tools\obs\generated\Super Stream Bros.json</code> and a <code>layout.svg</code> picture of every box. (<code>--name</code> for another name, <code>--force</code> to rebuild after changing layout.json.)</span></label>
+    <label><input type="checkbox"><span>OBS: <b>Scene Collection &gt; Import</b> &gt; pick the .json &gt; tick it &gt; Import. Then <b>Scene Collection &gt; Super Stream Bros</b>.</span></label>
+    <label><input type="checkbox"><span>Double-click <b>Game capture</b> and pick your capture card; <b>Webcam</b>: your camera. Add audio sources (capture card audio, room mic, commentary) with <b>+</b>.</span></label>
+    <label><input type="checkbox"><span>Put a set on stream in the dock: names, pictures and round appear in OBS within a second.</span></label>
+    <div class="obs" style="margin-top:10px">
+      <figure><img src="images/obs_preview.png" alt="OBS preview of the generated SSB Stream scene: Halloween sample panel with webcam frame, names Quill and Ember with default pictures, round 'Survivors Quarters', game area on the right (black: no capture device picked)"><figcaption>The generated scene in OBS 33, straight after import (no devices picked yet, so the game and webcam are black). Theme: Halloween, so the round reads "Survivors Quarters".</figcaption></figure>
+      <figure><img src="images/obs_sources.png" alt="OBS Scenes list: SSB Stream, SSB No Overlay; Sources list: Round, P2 stock icon, P2 picture, P2 name, P1 stock icon, P1 picture, P1 name, Overlay, Webcam (and Game capture)"><figcaption>Scenes and sources it creates.</figcaption></figure>
+    </div>
+    <div class="wrap" style="margin-top:10px"><table>
+      <tr><th>Source</th><th>Shows</th><th>Placed by (layout.json)</th></tr>
+      <tr><td>Game capture</td><td><span class="chip c-media"></span>your capture card (pick the device)</td><td><code>game_x</code>, <code>game_w</code>, full height, kept 4:3</td></tr>
+      <tr><td>Webcam</td><td><span class="chip c-media"></span>your camera, behind the panel's transparent hole</td><td><code>cam</code> [x, y, w, h]</td></tr>
+      <tr><td>Overlay</td><td><span class="chip c-file"></span><code>output\overlay.png</code> = the active theme's panel</td><td><code>panel_w</code> x 1080 at 0,0</td></tr>
+      <tr><td>P1 / P2 name</td><td><span class="chip c-data"></span><code>output\player1_tag.txt</code> / <code>player2_tag.txt</code></td><td>right edge <code>p1.name_right</code>, centre <code>p1.name_cy</code>; box <code>name_box</code></td></tr>
+      <tr><td>P1 / P2 picture</td><td><span class="chip c-data"></span><code>output\player1_pfp.png</code> (start.gg picture, round)</td><td><code>p1.pfp</code> [x, y, size]</td></tr>
+      <tr><td>P1 / P2 stock icon</td><td><span class="chip c-data"></span><code>output\player1_stock.png</code></td><td><code>p1.stock</code> [x, y, size]</td></tr>
+      <tr><td>Round</td><td><span class="chip c-data"></span><code>output\match_round.txt</code> (themed wording if on)</td><td>centre <code>round.cx</code>/<code>round.cy</code>; box <code>round_box</code></td></tr>
+    </table></div>
+    <p class="muted"><span class="chip c-file"></span>a file you provide · <span class="chip c-data"></span>written by the dock per set · <span class="chip c-media"></span>a device. Already have a Stream Updater scene? The dock writes the same file names: point your existing text/image sources at the dock's <code>output\</code> folder instead.</p>
+  </section>
+
+  <section>
+    <h3><span class="where">Stream PC</span> Recording settings (the render PC relies on these)</h3>
+    <div class="wrap"><table>
+      <tr><th>OBS setting</th><th>Value</th><th>Why</th></tr>
+      <tr><td>Settings &gt; Output &gt; Recording &gt; Recording Path</td><td><code>&lt;SSD&gt;\MeleeRecordings\</code> (or a local folder; copy it after)</td><td>the handoff folder</td></tr>
+      <tr><td>Recording Format</td><td><b>Hybrid MP4</b> (or MKV)</td><td>a crash or power cut doesn't ruin the file</td></tr>
+      <tr><td>Settings &gt; Advanced &gt; Recording &gt; Filename Formatting</td><td><code>%CCYY-%MM-%DD %hh-%mm-%ss</code></td><td>the cutter reads the start time from the name</td></tr>
+      <tr><td>Settings &gt; Video</td><td>Base and output 1920x1080, 60 fps (30 works)</td><td>layout.json is in 1920x1080</td></tr>
+      <tr><td>Encoder</td><td>hardware (AMD/NVIDIA/Intel) if the PC has one; x264 otherwise</td><td>keeps the stream PC responsive</td></tr>
+    </table></div>
+    <p class="note">Check the audio meter early in the night: a silent source can go unnoticed for a long time, and replays can rebuild the game audio but not the room or commentary.</p>
+  </section>
+
+  <h2 id="themes">4. Themes (special weeks)</h2>
+  <section>
+    <div class="two">
+      <figure><img src="images/themes_strip.png" alt="Three panels side by side: Default (plain sample panel), Halloween (purple tint, moon, bats, graveyard, jack-o'-lantern at the bottom), Winter (blue tint, snowy ground, pine trees, snowflakes)"><figcaption>The sample panel and the two example themes, made by <code>make_theme_art.py</code> from it. Your own panel works the same way.</figcaption></figure>
+      <div>
+        <h3><span class="where">Stream PC</span> Pick a theme for the night</h3>
+        <label><input type="checkbox"><span>Dock ⚙ &gt; <b>Seasonal theme</b> &gt; pick it. The list is every folder with a <code>theme.json</code> in <code>tools\render\overlays\melee_themes\</code>.</span></label>
+        <label><input type="checkbox"><span><b>Themed round names</b>: start.gg's names become the theme's (e.g. Winners Quarter-Final → "Survivors Quarters") on the dock pages and on stream. <b>Themed overlay graphic</b>: OBS gets the theme's <code>overlay.png</code>.</span></label>
+        <label><input type="checkbox"><span>After the event pick <b>Default</b> again, and tell the render PC: <code>"season": "&lt;Theme&gt;"</code> in that week's <code>vod_config.json</code> so the VODs match.</span></label>
+        <h3><span class="where opt">Any PC</span> Make a theme</h3>
+        <p style="margin:0 0 6px">A folder in <code>melee_themes\</code> with a <code>theme.json</code> (name, round names) and optionally an <code>overlay.png</code> the size of Default's. To start from your own panel:</p>
+        <pre>python tools\render\overlays\melee_themes\make_theme_art.py Halloween</pre>
+        <p class="muted" style="margin:0">Draws the scenery under your round bar (placed from layout.json), writes <code>overlay.png</code>, each piece as a layer for an image editor, and a preview. <code>art.json</code> moves things or picks the <code>winter</code> kit. Details: <code>melee_themes\PROVIDE YOUR OWN.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <h2 id="art">5. Your own art (not included)</h2>
+  <section>
+    <p class="sub" style="margin-bottom:8px">The package has no Nintendo art and no PROTOCOL art or font. Everything works without them; this is what to add for your look.</p>
+    <div class="wrap"><table>
+      <tr><th>What</th><th>Where</th><th>Without it</th></tr>
+      <tr><td>Your side panel (transparent webcam hole)</td><td><code>tools\render\overlays\melee_themes\Default\overlay.png</code></td><td>the grey sample panel</td></tr>
+      <tr><td>Positions, if your layout differs</td><td><code>melee_themes\layout.json</code> (example in <code>examples\</code>), then re-run the OBS generator</td><td>PROTOCOL's positions</td></tr>
+      <tr><td>Stock icons (123 PNGs, <code>"&lt;color&gt; &lt;Character&gt;.png"</code>)</td><td><code>tools\render\docks\melee\assets\stock_icons\</code> (names listed in its <code>PROVIDE YOUR OWN.md</code>)</td><td>picker shows names; no icon on stream</td></tr>
+      <tr><td>Picture for players without one</td><td><code>tools\render\docks\melee\assets\default.png</code></td><td>a plain sample silhouette</td></tr>
+      <tr><td>Stream font</td><td>installed in Windows + <code>"obs_font"</code> (OBS); file in <code>docks\melee\assets\fonts\</code> (dock name fitting); <code>"font_file"</code> (VODs)</td><td>Segoe UI</td></tr>
+    </table></div>
+    <p class="muted">Layout map of every spot on the panel: <a href="04%20Overlay%20layout%20map.html">guide 4</a>.</p>
+  </section>
+
+  <h2 id="wii">6. Wiis and flash drives</h2>
+  <section>
+    <label><input type="checkbox"><span>Each Wii runs <b>Slippi Nintendont</b> (download and SD card steps: <a href="https://slippi.gg/downloads">slippi.gg/downloads</a>). It saves every game as a <code>.slp</code> replay to a USB flash drive in the Wii.</span></label>
+    <label><input type="checkbox"><span><b>One flash drive per setup, each with its own volume label</b> (Explorer &gt; the drive &gt; Rename, up to 11 characters, e.g. <code>SETUPONE</code>, <code>SETUPTWO</code>). The upload script tells drives apart by this label only: cheap drives often share a serial number. Write the same name on the drive itself.</span></label>
+    <label><input type="checkbox"><span>The first time a drive is uploaded on the render PC, <code>slippi_uploader.py</code> asks for its folder name; give it the <b>dock's setup name</b> (e.g. <code>SETUPONE</code> → <code>Main Setup</code>). It remembers the pair.</span></label>
+    <label><input type="checkbox"><span>Before the night: set each Wii's date and time (Wii Settings &gt; Calendar). Wrong clocks are corrected later, but closer is easier.</span></label>
+  </section>
+
+  <h2 id="ult">7. Ultimate side <a class="beta" href="https://github.com/FRjhracing/Super-Stream-Bros/issues" title="Not thoroughly tested yet: please report bugs and issues on GitHub">&#9733; beta</a></h2>
+  <section>
+    <p style="margin:0">The Ultimate dock (<code>tools\render\docks\ultimate\</code>, port 8766) is the same idea without an overlay: it logs when each set
+      starts and ends on two recordings, plus the characters per player, so the render PC can cut the recordings. It is sent to the Ultimate
+      TO as a zip (steps in its <code>README.md</code>); <code>SETUP.txt</code> in it is their guide. On the night they press <b>● Rec started</b>
+      when each OBS starts recording and use <b>Put on recording 1/2</b> / <b>Put on setup…</b> for every set.</p>
+  </section>
+
+  <h2 id="after">8. After the night (handoff, no AI needed)</h2>
+  <section>
+    <label><input type="checkbox"><span>Stop recording; close OBS.</span></label>
+    <label><input type="checkbox"><span>On the SSD (volume label <code>Project Storage</code>) make <code>MeleeRecordings\Protocol-N\</code> (N = your tournament number).</span></label>
+    <label><input type="checkbox"><span>Copy the recording <code>YYYY-MM-DD HH-MM-SS.mp4</code> there (skip if OBS recorded straight to the SSD: just move it into the folder).</span></label>
+    <label><input type="checkbox"><span>Copy from <code>tools\render\docks\melee\timestamps\&lt;tournament-slug&gt;\</code>: <code>setups.jsonl</code>, <code>setups.csv</code>, <code>Setup times.txt</code>. Don't edit them: the render PC reads <code>setups.jsonl</code> as written (format: <code>docs\reference\RENDER_PC_HANDOFF.md</code>).</span></label>
+    <label><input type="checkbox"><span>Ultimate TO: both recordings and the <b>whole</b> <code>timestamps\&lt;slug&gt;\</code> folder (with <code>log.jsonl</code>) to <code>UltimateRecordings\Protocol #N\</code>.</span></label>
+    <label><input type="checkbox"><span>Eject the SSD (Explorer &gt; Eject) and take it with the flash drives to the render PC. Next steps: <a href="02%20Weekly%20workflow.html">guide 2</a>.</span></label>
+    <p class="muted">Big file copies: Explorer is fine; <code>robocopy "&lt;from&gt;" "&lt;to&gt;" "&lt;file&gt;" /J</code> is faster for 10+ GB. Compare sizes after copying.</p>
+  </section>
+
+  <h2 id="trouble">Troubleshooting</h2>
+  <section class="wrap">
+    <table>
+      <tr><th>Symptom</th><th>Fix</th></tr>
+      <tr><td>Pages say "Dock server not reachable"</td><td><code>start_dock.bat</code> isn't running (or was closed). Start it; the pages reconnect.</td></tr>
+      <tr><td>"start.gg token not found"</td><td><code>set_token.bat</code>, then close and restart <code>start_dock.bat</code>.</td></tr>
+      <tr><td>"No tournament yet"</td><td>Set <code>"shortLink"</code> in <code>dock_config.json</code>, or type a slug in ⚙ &gt; Load slug.</td></tr>
+      <tr><td>"Port 8765 is busy"</td><td>The dock is already running (another window). Use that one.</td></tr>
+      <tr><td>Bracket takes 20-60 s to load</td><td>A network where start.gg's IPv6 doesn't answer: the dock already prefers IPv4; check the PC's internet.</td></tr>
+      <tr><td>Yellow "rate limit" note</td><td>start.gg allows 80 requests a minute; the dock slows down by itself. Close extra copies of the pages.</td></tr>
+      <tr><td>OBS shows old names / no overlay</td><td>Check the sources point at the dock's <code>output\</code> (moved the dock? re-run the generator with <code>--force</code> and import again, or fix the paths in each source).</td></tr>
+      <tr><td>Long names too small in OBS</td><td>Set <code>name_box</code> in layout.json to your OBS name box size and add your font to <code>assets\fonts\</code>; the dock then shortens names before they get unreadable.</td></tr>
+      <tr><td>Theme missing from the list</td><td>Its folder needs a <code>theme.json</code>; check the "Themes:" path the dock prints at start (<code>themesFolder</code>).</td></tr>
+      <tr><td>Character picker shows names, not icons</td><td>No stock icons yet: see <a href="#art">Your own art</a>.</td></tr>
+    </table>
+  </section>
+</main>
+<script>
+  const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+  const KEY = 'ssb-stream-v1';
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+  boxes.forEach((b, i) => {
+    b.checked = !!saved[i];
+    b.addEventListener('change', () => { try { localStorage.setItem(KEY, JSON.stringify(boxes.map(x => x.checked))); } catch (e) {} });
+  });
+  document.getElementById('reset').onclick = () => { boxes.forEach(b => b.checked = false); try { localStorage.removeItem(KEY); } catch (e) {} };
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+  "_about": "Copy to tools\\render\\overlays\\melee_themes\\layout.json to move the Melee panel's pieces. One file for all three users: the VOD renderer (vod_overlay.py), the OBS scene generator (tools\\obs\\make_obs_scenes.py) and the Melee dock (name_box). Values = PROTOCOL's layout (the defaults). All positions in 1920x1080 pixels. Leave out what you don't change. See guides\\04 Overlay layout map.html and guides\\05 Stream PC dock and OBS.html.",
+  "panel_w": 607,
+  "game_x": 607,
+  "game_w": 1313,
+  "cam": [
+    16,
+    37,
+    580,
+    326
+  ],
+  "p1": {
+    "name_right": 452,
+    "name_cy": 631,
+    "pfp": [
+      488,
+      590,
+      77
+    ],
+    "stock": [
+      540,
+      627,
+      47
+    ]
+  },
+  "p2": {
+    "name_right": 455,
+    "name_cy": 737,
+    "pfp": [
+      488,
+      698,
+      79
+    ],
+    "stock": [
+      540,
+      750,
+      47
+    ]
+  },
+  "round": {
+    "cx": 303,
+    "cy": 846
+  },
+  "name_size": 46,
+  "round_size": 50,
+  "name_box": [
+    273,
+    59
+  ],
+  "round_box": [
+    520,
+    64
+  ],
+  "text": "white",
+  "cam_fill": "0x0d1b33",
+  "cam_edge": "0x3a6fd8",
+  "cam_sub": "0xb8c7e6",
+  "font_file": "YourStreamFont.ttf",
+  "obs_font": "Segoe UI",
+  "obs_font_bold": true,
+  "_keys": {
+    "panel_w": "panel image scaled to this width at 0,0",
+    "game_x/game_w": "game picture box, full height",
+    "cam": "webcam box x, y, w, h (transparent in your panel)",
+    "name_right/name_cy": "names are right-aligned to x, centred on y",
+    "pfp": "picture x, y, size",
+    "stock": "stock icon x, y, size",
+    "round": "round text centre",
+    "name_size/round_size": "text size in rendered VODs",
+    "name_box": "OBS name box w, h (right edge at name_right, centred on name_cy); the dock shortens names that would shrink too far in it",
+    "round_box": "OBS round box w, h, centred on round cx/cy",
+    "font_file": "your font file in melee_themes\\Default\\ (VOD renders; missing = Segoe UI Bold)",
+    "obs_font/obs_font_bold": "installed font name for the OBS text sources (install your stream font in Windows first)"
+  }
+}

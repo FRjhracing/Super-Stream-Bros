@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install and Setup</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1c2230; --muted:#5b6475; --accent:#2f6fdb; --line:#dde2ea; --code:#eef1f6; --done:#2e9d5b; --warn:#b26a00; --stream:#ae3ec9; --opt:#868e96; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#12161f; --card:#1b212d; --text:#e6e9ef; --muted:#9aa3b5; --accent:#6d9cff; --line:#2c3445; --code:#252d3c; --done:#4cc47f; --warn:#e0a03a; --stream:#d07be6; --opt:#8d96a3; } }
+  :root[data-theme="dark"] { --bg:#12161f; --card:#1b212d; --text:#e6e9ef; --muted:#9aa3b5; --accent:#6d9cff; --line:#2c3445; --code:#252d3c; --done:#4cc47f; --warn:#e0a03a; --stream:#d07be6; --opt:#8d96a3; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, "Segoe UI", sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 14px 0; }
+  h2 { font-size: 16px; margin: 0 0 8px; display:flex; gap:8px; align-items:center; flex-wrap: wrap; }
+  .where { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--accent); color: #fff; }
+  .where.both { background: var(--done); } .where.stream { background: var(--stream); } .where.opt { background: var(--opt); }
+  label { display: flex; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; }
+  label:first-of-type { border-top: 0; }
+  input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; flex: none; accent-color: var(--done); }
+  input:checked + span { color: var(--muted); text-decoration: line-through; }
+  code { background: var(--code); padding: 1px 6px; border-radius: 4px; font: 13px Consolas, monospace; word-break: break-word; }
+  a { color: var(--accent); }
+  .note { color: var(--warn); font-size: 13px; margin: 8px 0 0; }
+  .muted { color: var(--muted); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 6px 0; }
+  td, th { text-align: left; padding: 4px 6px; border-top: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); border-top: 0; }
+  nav { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 8px; }
+  nav a { font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 99px; padding: 2px 10px; background: var(--card); }
+  button { font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer; }
+  .beta { display:inline-block; font-size:11px; font-weight:700; line-height:1.5; padding:0 7px; border-radius:99px; border:1px solid var(--warn, #b26a00); color:var(--warn, #b26a00) !important; text-decoration:none; vertical-align:2px; white-space:nowrap; margin-left:4px; }
+  .beta-note { font-size:13px; color:var(--muted); border-left:3px solid var(--warn, #b26a00); padding:4px 10px; margin:0 0 14px; max-width:820px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Install and setup</h1>
+  <p class="sub">Everything a new PC needs, in order. Badges say where each step happens: <span class="where both">Both PCs</span>
+    <span class="where">Render PC</span> <span class="where stream">Stream PC</span> <span class="where opt">Optional</span>.
+    No third-party software ships with this package: each step links the official download. Ticks are saved in this browser.</p>
+  <p class="beta-note"><span class="beta" style="margin:0 4px 0 0">&#9733; beta</span> = used at our events but not thoroughly tested yet. Found a bug or something unclear? <a href="https://github.com/FRjhracing/Super-Stream-Bros/issues">Open an issue on GitHub</a> (FRjhracing).</p>
+  <nav><a href="05%20Stream%20PC%20dock%20and%20OBS.html">Stream PC guide (screenshots)</a><a href="#base">Base</a><a href="#render">Render tools</a><a href="#dolphin">Replay renderer</a><a href="#google">Google / YouTube</a><a href="#art">Overlay art</a><a href="#stream">Stream PC</a><a href="#ai">AI agent</a></nav>
+
+  <section id="base">
+    <h2><span class="where both">Both PCs</span> 1. Base</h2>
+    <label><input type="checkbox"><span>Copy this <b>Super Stream Bros</b> folder to the PC (any path; scripts find each other from their own location). Run every command from that folder.</span></label>
+    <label><input type="checkbox"><span>Install <b>Python 3.14</b> from <a href="https://www.python.org/downloads/">python.org/downloads</a> (Windows: the Python install manager). Check: <code>python --version</code>. No pip packages are needed for the pipeline.</span></label>
+    <label><input type="checkbox"><span><b>start.gg token</b>: start.gg &gt; your profile &gt; <b>Developer settings</b> &gt; create a personal access token (an admin of the tournament's page). In a terminal: <code>setx STARTGG_TOKEN "&lt;token&gt;"</code>, then open a new terminal. Never paste it into a file or a chat.</span></label>
+    <label><input type="checkbox"><span><b>External SSD</b>: label the volume exactly <code>Project Storage</code> (Explorer &gt; drive &gt; Rename). Plug it into a rear USB 3.1+ port with a 10 Gbps+ cable (not a hub: it dropped writes at USB 2.0). Folders <code>MeleeRecordings\</code>, <code>UltimateRecordings\</code>, <code>Protocol VOD\Melee\</code>, <code>Protocol VOD\Ultimate\</code> are created as needed.</span></label>
+  </section>
+
+  <section id="render">
+    <h2><span class="where">Render PC</span> 2. ffmpeg and rclone</h2>
+    <label><input type="checkbox"><span><b>ffmpeg</b> (full build, Windows): <a href="https://www.gyan.dev/ffmpeg/builds/">gyan.dev/ffmpeg/builds</a> (or links on <a href="https://ffmpeg.org/download.html">ffmpeg.org</a>). Extract so these exist: <code>tools\ffmpeg\bin\ffmpeg.exe</code> and <code>tools\ffmpeg\bin\ffprobe.exe</code>. Not needed on PATH.</span></label>
+    <label><input type="checkbox"><span>GPU encoder: the renders use <code>h264_amf</code> (AMD). Check: <code>tools\ffmpeg\bin\ffmpeg -hide_banner -encoders | findstr 264</code>. NVIDIA: change <code>ENC</code> in <code>tools\python\vod_cutter.py</code> to <code>h264_nvenc</code>; Intel: <code>h264_qsv</code>; none: <code>libx264</code> (slow).</span></label>
+    <label><input type="checkbox"><span><b>rclone</b>: <a href="https://rclone.org/downloads/">rclone.org/downloads</a> (Windows 64-bit zip). Put <code>rclone.exe</code> at <code>tools\rclone\rclone.exe</code>. The <code>gdrive</code> remote is set up in step 4.</span></label>
+    <label><input type="checkbox"><span><b>Pillow</b> <span class="muted">(only for the art scripts <code>make_sample_assets.py</code> / <code>make_frame.py</code>)</span>: <code>python -m pip install --user pillow</code></span></label>
+  </section>
+
+  <section id="dolphin">
+    <h2><span class="where">Render PC</span> 3. Replay renderer (Slippi playback Dolphin)</h2>
+    <label><input type="checkbox"><span>Install <b>Slippi Launcher</b> from <a href="https://slippi.gg/downloads">slippi.gg/downloads</a>, open it once and let it download the playback Dolphin (watch any replay once).</span></label>
+    <label><input type="checkbox"><span>Copy the <b>contents</b> of <code>%APPDATA%\Slippi Launcher\playback\</code> into <code>tools\render\slippi_playback\</code> (so <code>tools\render\slippi_playback\Slippi Dolphin.exe</code> exists). This private copy is the one we change; never edit the Launcher's own.</span></label>
+    <label><input type="checkbox"><span>Create an empty file <code>tools\render\slippi_playback\portable.txt</code> (Dolphin then keeps its settings in that folder's <code>User\</code>).</span></label>
+    <label><input type="checkbox"><span>Start <code>Slippi Dolphin.exe</code> from that folder once and set (or edit <code>User\Config\*.ini</code> with Dolphin closed):
+      <table>
+        <tr><th>File / section</th><th>Setting</th><th>Why</th></tr>
+        <tr><td>Dolphin.ini [Movie]</td><td><code>DumpFrames = True</code>, <code>DumpFramesSilent = True</code></td><td>frame dump = the video</td></tr>
+        <tr><td>Dolphin.ini [DSP]</td><td><code>DumpAudio = True</code>, <code>DumpAudioSilent = True</code></td><td>game audio (dspdump.wav)</td></tr>
+        <tr><td>Dolphin.ini [Interface]</td><td><code>ConfirmStop = False</code>, <code>PauseOnFocusLost = False</code>, <code>OnScreenDisplayMessages = False</code>, <code>HideCursor = True</code></td><td>no prompts, no text burned into the dump</td></tr>
+        <tr><td>GFX.ini [Settings]</td><td><code>InternalResolutionFrameDumps = True</code>, <code>EFBScale = 2</code></td><td>sharp 2x dump</td></tr>
+        <tr><td>GFX.ini [Hardware]</td><td><code>VSync = False</code></td><td>render faster than real time</td></tr>
+        <tr><td>GFX.ini [Settings]</td><td><code>FullAsyncShaderCompilation = False</code>, <code>CompileShaderOnStartup = True</code></td><td>no missing objects in the first games</td></tr>
+        <tr><td>Graphics backend</td><td>Direct3D 11</td><td>keeps its shader cache</td></tr>
+      </table></span></label>
+    <label><input type="checkbox"><span><b>Melee ISO</b>: your own dump of <b>Super Smash Bros. Melee NTSC 1.02</b> (vanilla, MD5 <code>0e63d4223b01d9aba596259dc155a174</code>). Not included, never shared.</span></label>
+    <label><input type="checkbox"><span>Copy <code>examples\machine_settings.example.json</code> to <code>machine_settings.json</code> (package root); replace the key with this PC's name (<code>echo %COMPUTERNAME%</code>) and set <code>iso</code> to your ISO's path. <code>render_speed</code> 4.0 is a ceiling; a weak PC may need 1.0 or 0.85.</span></label>
+    <label><input type="checkbox"><span>Test: <code>python tools\python\replay_render.py "&lt;any .slp&gt;" test.mp4</code> then check the in-game timer runs smoothly in <code>test.mp4</code>.</span></label>
+    <p class="note">Some PCs wait ~40 s at every Dolphin start (a mouse/keyboard HID interface that doesn't answer DirectInput). See Troubleshooting; <code>tools\corsair_mouse_channels_OFF.bat</code> fixes it for one Corsair model.</p>
+  </section>
+
+  <section id="google">
+    <h2><span class="where both">Any PC with a browser</span> 4a. Google Cloud project (once)</h2>
+    <label><input type="checkbox"><span>Open <a href="https://console.cloud.google.com/">console.cloud.google.com</a> signed in as the account that owns the YouTube channel <b>and</b> the Drive folder "SSBM Replay Storage"</span></label>
+    <label><input type="checkbox"><span>Project picker &gt; <b>New project</b> (e.g. <code>Protocol VOD</code>) &gt; Create, then select it</span></label>
+    <label><input type="checkbox"><span>APIs &amp; Services &gt; Library: enable <code>YouTube Data API v3</code> and <code>Google Drive API</code></span></label>
+    <label><input type="checkbox"><span>OAuth consent screen (Google Auth Platform): app name, your email, audience <b>External</b>; Data access: add <code>.../auth/youtube</code> and <code>.../auth/drive</code></span></label>
+    <label><input type="checkbox"><span>Audience &gt; <b>Publish app</b> (status "In production")</span></label>
+    <p class="note">Left in "Testing", every sign-in expires after 7 days (happened 2026-11-10 and again 2026-11-17). Unverified is fine for your own account: at sign-in click Advanced &gt; Go to the app.</p>
+    <label><input type="checkbox"><span>Clients &gt; Create &gt; <b>Desktop app</b> &gt; <b>Download JSON</b> right away. Move it by USB stick, never a shared link.</span></label>
+
+    <h2 style="margin-top:14px"><span class="where">Render PC</span> 4b. Sign-ins</h2>
+    <label><input type="checkbox"><span>Save the JSON as <code>%APPDATA%\ProtocolVOD\client_secret.json</code>. For the second channel (SoVA, where all PROTOCOL videos go) also as <code>client_secret_sova.json</code>.</span></label>
+    <label><input type="checkbox"><span>YouTube: <code>python tools\python\youtube_upload.py auth --account sova</code> &gt; browser &gt; pick the account/channel &gt; Allow. It prints <code>Signed in. Channel: ...</code>: check the name.</span></label>
+    <label><input type="checkbox"><span>Drive: <code>python tools\python\rclone_own_client.py</code> &gt; browser &gt; the account that <b>owns</b> "SSBM Replay Storage". Then <code>tools\rclone\rclone.exe config update gdrive root_folder_id &lt;that folder's ID&gt;</code> (ID = last part of its Drive URL).</span></label>
+    <label><input type="checkbox"><span>Check: <code>tools\rclone\rclone.exe lsd gdrive:</code> lists the <code>Protocol #N</code> folders, and <code>rclone about gdrive:</code> shows the owner's real usage (≈0 B = wrong account, uploads will fail with 403).</span></label>
+    <p class="muted">Lifting the "Private only" upload lock needs Google's API audit: <a href="03%20YouTube%20API%20audit%20form.html">answers for the form</a>. Until then publish in YouTube Studio.</p>
+  </section>
+
+  <section id="art">
+    <h2><span class="where">Render PC</span> 5. Overlay art and font</h2>
+    <label><input type="checkbox"><span>The package has <b>generic sample assets</b> (blank panel, plain pictures, "YOUR LOGO" emblem) so renders work out of the box with a standard Windows font. See the <a href="04%20Overlay%20layout%20map.html">overlay layout map</a> for what goes where.</span></label>
+    <label><input type="checkbox"><span>Your own look: replace <code>tools\render\overlays\melee_themes\Default\overlay.png</code> (side panel), <code>default.png</code>, and for Ultimate <code>tools\render\overlays\ultimate\emblem.png</code> (then <code>python tools\render\overlays\ultimate\make_frame.py</code>). Different layout: <code>melee_themes\layout.json</code> (example in <code>examples\</code>).</span></label>
+    <label><input type="checkbox"><span>Your stream font: put the .otf/.ttf in <code>melee_themes\Default\</code> and set <code>"font_file"</code> in layout.json (or name it <code>Typo_Round_Regular_Demo.otf</code>); for Ultimate put it in <code>overlays\ultimate\fonts\</code>. Free, licence-clear options: <a href="https://fonts.google.com/">Google Fonts</a> (e.g. a rounded sans like Nunito or Varela Round).</span></label>
+    <label><input type="checkbox"><span>Stock icons (Melee panel): the Melee dock's <code>tools\render\docks\melee\assets\stock_icons\</code> (named <code>&lt;color&gt; &lt;Character&gt;.png</code>; full list in its <code>PROVIDE YOUR OWN.md</code>; not included). Without them the panel simply shows no icon.</span></label>
+    <label><input type="checkbox"><span>Seasonal themes: <code>python tools\render\overlays\melee_themes\make_theme_art.py Halloween</code> draws one from your own <code>Default\overlay.png</code> (examples: <code>Halloween\</code>, <code>Winter\</code>); use it in a VOD with <code>"season"</code> in vod_config.json.</span></label>
+  </section>
+
+  <section id="stream">
+    <h2><span class="where stream">Stream PC</span> 6. Night-of setup</h2>
+    <p class="muted" style="margin:0 0 6px">Step by step with screenshots: <a href="05%20Stream%20PC%20dock%20and%20OBS.html">guide 5, Stream PC: dock, OBS and themes</a>.</p>
+    <label><input type="checkbox"><span><b>Melee dock</b>: <code>tools\render\docks\melee\set_token.bat</code> (start.gg token), <code>start_dock.bat</code>, then set <code>"shortLink"</code> (your series' start.gg short link) in the <code>dock_config.json</code> it writes. <code>open_docks.bat</code> opens Home, Full Bracket and Active Bracket (<code>http://127.0.0.1:8765/</code>, <code>/bracket</code>, <code>/active</code>; also usable as OBS Custom Browser Docks).</span></label>
+    <label><input type="checkbox"><span><b>OBS Studio</b>: <a href="https://obsproject.com/download">obsproject.com/download</a>. <code>python tools\obs\make_obs_scenes.py</code> builds a scene collection from <code>layout.json</code>; OBS &gt; Scene Collection &gt; Import it, then pick your capture card and webcam. Recording: Hybrid MP4, file name format <code>%CCYY-%MM-%DD %hh-%mm-%ss</code> (the cutter reads the start time from it), path on the SSD <code>MeleeRecordings\</code>.</span></label>
+    <label><input type="checkbox"><span><b>Stream art</b>: stock icons into <code>tools\render\docks\melee\assets\stock_icons\</code> (123 names in its <code>PROVIDE YOUR OWN.md</code>), your font in Windows + <code>"obs_font"</code>; themes in <code>tools\render\overlays\melee_themes\</code>, picked in the dock's ⚙.</span></label>
+    <label><input type="checkbox"><span><b>Ultimate Dock</b><a class="beta" href="https://github.com/FRjhracing/Super-Stream-Bros/issues" title="Not thoroughly tested yet: please report bugs and issues on GitHub">&#9733; beta</a> (the Ultimate TO's PC): <code>tools\render\docks\ultimate\</code>, sent as a zip (its README); port 8766; press <b>Rec started</b> when OBS starts recording; at the end copy the whole <code>timestamps\&lt;slug&gt;\</code> folder to the SSD.</span></label>
+    <label><input type="checkbox"><span><b>Wiis</b>: Slippi Nintendont (<a href="https://slippi.gg/downloads">slippi.gg/downloads</a>) on each, one USB flash drive per Wii with a <b>unique volume label</b> (e.g. <code>SETUPONE</code>). Set each Wii's date and time before the night (wrong clocks are tolerated, but the closer the better).</span></label>
+  </section>
+
+  <section id="ai">
+    <h2><span class="where opt">Optional</span> 7. AI agent</h2>
+    <label><input type="checkbox"><span><b>Claude Code</b>: <a href="https://docs.claude.com/en/docs/claude-code/overview">docs.claude.com/en/docs/claude-code/overview</a>. Start it in this folder; give it <code>docs\reference\CLAUDE.md</code> as the project guide (copy it to the folder root as <code>CLAUDE.md</code>). Everything also works without it: see <code>docs\AI and hands-off.md</code>.</span></label>
+  </section>
+
+  <p><button id="reset">Clear ticks</button></p>
+</main>
+<script>
+  const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+  const KEY = 'ssb-install-v1';
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+  boxes.forEach((b, i) => {
+    b.checked = !!saved[i];
+    b.addEventListener('change', () => { try { localStorage.setItem(KEY, JSON.stringify(boxes.map(x => x.checked))); } catch (e) {} });
+  });
+  document.getElementById('reset').onclick = () => { boxes.forEach(b => b.checked = false); try { localStorage.removeItem(KEY); } catch (e) {} };
+</script>
+</body>
+</html>

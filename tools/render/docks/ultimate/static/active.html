@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSBU:Active Bracket</title>
+<link rel="stylesheet" href="/static/dock.css">
+<link rel="stylesheet" href="/static/bracket.css">
+</head>
+<body class="bracket-page active-page">
+<header class="bar">
+  <div class="title">
+    <strong id="t-name">Active Bracket</strong>
+    <span id="counts" class="muted small"></span>
+  </div>
+  <div class="bar-actions">
+    <span id="updated" class="muted"></span>
+    <button id="btn-refresh" title="Refresh">↻</button>
+  </div>
+</header>
+<div id="status" class="status hidden"></div>
+
+<main id="board" class="board"><p class="muted pad">Loading…</p></main>
+
+<script src="/static/common.js"></script>
+<script src="/static/active.js"></script>
+</body>
+</html>

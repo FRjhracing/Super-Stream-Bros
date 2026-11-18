@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Stream Bros Ultimate - Home</title>
+<link rel="stylesheet" href="/static/dock.css">
+</head>
+<body>
+<header class="bar">
+  <div class="title">
+    <strong id="t-name">Super Stream Bros Ultimate - Home</strong>
+    <select id="event-select" class="hidden" title="Ultimate event"></select>
+  </div>
+  <div class="bar-actions">
+    <span id="updated" class="muted"></span>
+    <button id="btn-bracket" title="Open SSBU:Full Bracket (http://127.0.0.1:8766/bracket)">⊞ Bracket</button>
+    <button id="btn-active" title="Open SSBU:Active Bracket (http://127.0.0.1:8766/active): only the round being played, in suggested call order">▤ Active</button>
+    <button id="btn-refresh" title="Refresh">↻</button>
+    <button id="btn-settings" title="Settings">⚙</button>
+  </div>
+</header>
+<div id="status" class="status hidden"></div>
+
+<section id="settings" class="panel hidden">
+  <div class="settings-grid">
+    <div>
+      <label>Tournament slug <span class="muted">(the part after start.gg/tournament/; empty = follow "shortLink" in dock_config.json)</span>
+        <input id="slug-input" placeholder="your-weekly-12">
+      </label>
+      <div class="row">
+        <button id="btn-latest" title="Follow your series' start.gg short link (shortLink in dock_config.json) to its newest tournament">Use latest (series link)</button>
+        <button id="btn-slug">Load slug</button>
+      </div>
+    </div>
+    <div>
+      <label><span data-slot="1">Recording 1</span> → start.gg stream <span class="muted">(optional)</span><select id="sid-1" data-n="1"></select></label>
+      <label><span data-slot="2">Recording 2</span> → start.gg stream <span class="muted">(optional)</span><select id="sid-2" data-n="2"></select></label>
+    </div>
+  </div>
+  <div class="setup-settings">
+    <label>Number of setups <span class="muted">(all of them, recorded or not: "Put on setup" times every set)</span>
+      <input id="setup-count" type="number" min="1" max="16" class="narrow">
+    </label>
+    <div id="setup-names" class="setup-names"></div>
+    <div class="settings-grid">
+      <label><span data-slot="1">Recording 1</span> (main OBS) records <select id="rec-setup-1"></select></label>
+      <label><span data-slot="2">Recording 2</span> (portable OBS) records <select id="rec-setup-2"></select></label>
+    </div>
+  </div>
+  <p class="muted small" id="log-dir"></p>
+</section>
+
+<section class="streams">
+  <div class="stream-card s1" data-n="1"></div>
+  <div class="stream-card s2" data-n="2"></div>
+</section>
+
+<section class="panel">
+  <h2>Bracket <span class="muted small" id="open-count"></span></h2>
+  <div id="open-sets" class="sets"><p class="muted">Loading…</p></div>
+</section>
+
+<section class="panel">
+  <details id="log-details" open>
+    <summary><h2 class="inline">Timestamps</h2> <span class="muted small" id="log-count"></span></summary>
+    <div class="row log-actions">
+      <button id="btn-open-folder">Open timestamps folder</button>
+    </div>
+    <div id="log" class="log"></div>
+  </details>
+</section>
+
+<section class="panel">
+  <details>
+    <summary><h2 class="inline">Recent results</h2></summary>
+    <div id="done-sets" class="sets"></div>
+  </details>
+</section>
+
+<!-- Report + confirm dialogs are added by common.js (shared with the bracket page). -->
+<script src="/static/common.js"></script>
+<script src="/static/dock.js"></script>
+</body>
+</html>

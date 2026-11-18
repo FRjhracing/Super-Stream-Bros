@@ -1,0 +1,10 @@
+/* Active bracket page (/active). Builds on dock.css + bracket.css: same set boxes, columns and
+   set window as the Full Bracket; only the active round of each side is shown. */
+.active-page .board { padding: 10px; }
+.asides { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.aside { flex: 0 1 auto; min-width: 0; }
+.aside > h2 { margin: 2px 4px 8px; }
+.aside > h2 .muted { font-weight: 400; }
+.bset .order { font-size: 9px; font-weight: 700; white-space: nowrap; text-transform: uppercase;
+  padding: 0 4px; border-radius: 3px; background: color-mix(in srgb, var(--called) 70%, #000); color: #fff; }
+.active-page #btn-refresh { min-width: 44px; min-height: 44px; }

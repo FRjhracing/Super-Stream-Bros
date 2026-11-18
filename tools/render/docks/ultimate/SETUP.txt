@@ -1,0 +1,116 @@
+SUPER STREAM BROS ULTIMATE DOCK - setup and how to use it
+=========================================================
+
+What it is: a panel inside OBS for running the Ultimate bracket on start.gg (call, start,
+report, DQ) that also saves TIMESTAMPS for the two recordings, so the videos can be cut
+into one video per set afterwards. No overlay, nothing on screen: it only records.
+
+  Recording 1 = your main OBS (the one with this dock in it)
+  Recording 2 = the portable OBS (just records)
+
+
+ONE-TIME SETUP (about 10 minutes)
+---------------------------------
+1. Unzip this "Super Stream Bros Ultimate" folder somewhere it can stay, e.g. Documents\Super Stream Bros Ultimate.
+   (Don't run it from inside the zip.)
+
+2. Install Python (free) if you don't have it: https://www.python.org/downloads/
+   Run the installer and tick "Add python.exe to PATH" on the first screen.
+
+3. start.gg token (lets the dock report sets for you):
+   - You must be an admin on the tournament on start.gg (ask the main TO).
+   - start.gg > your profile picture > Developer Settings > Personal Access Tokens >
+     Create new token. Name it "Ultimate Dock". Copy the token.
+   - Double-click set_token.bat, paste the token, press Enter.
+   Keep the token private (it can report sets as you).
+
+4. Double-click start_dock.bat. A black window opens and says
+   "Super Stream Bros Ultimate dock running at http://127.0.0.1:8766/". Leave it open all night.
+
+5. The dock has three pages. Easiest: double-click open_docks.bat. It starts the dock if it
+   isn't running and opens all three in your browser (good for a touch screen):
+     Super Stream Bros Ultimate - Home   http://127.0.0.1:8766/          recordings, set list, timestamps
+     SSBU:Full Bracket                   http://127.0.0.1:8766/bracket   whole bracket; tabs for Winners /
+                                                                         Losers / Completed sets
+     SSBU:Active Bracket                 http://127.0.0.1:8766/active    only the round being played, in
+                                                                         suggested call order (closest seeds first)
+   On the two bracket pages, tap a set to open a window with its buttons.
+   Or put them inside OBS: Docks > Custom Browser Docks..., one line per page (name + URL),
+   click Apply and drag each dock where you want it.
+
+6. Which tournament: the first start writes dock_config.json in this folder. Put your series'
+   start.gg short link in it ("shortLink": "https://www.start.gg/YourSeries", the link that
+   always opens your newest tournament) and restart the dock, or type the slug in the gear
+   menu (the part after start.gg/tournament/) and click "Load slug". Check the dock title
+   shows this week's tournament; if not: gear (top right) > "Use latest (series link)".
+   Also in the gear menu: "Number of setups" (ALL your setups, recorded or not), a name
+   for each, and which setup Recording 1 and Recording 2 record. This is kept week to week.
+
+7. Portable OBS: set it up to capture the second setup and record. Nothing else to do there.
+   In BOTH OBS: Settings > Output > Recording, use "Hybrid MP4" or MKV (a crash or power
+   cut doesn't ruin the file) and leave the file name as the default date + time.
+
+
+EVERY TOURNAMENT NIGHT
+----------------------
+1. Start start_dock.bat, then OBS (main), then the portable OBS.
+2. Start recording in main OBS  -> click "● Rec started" under Recording 1.
+   Start recording in portable OBS -> click "● Rec started" under Recording 2.
+   (If a recording is stopped and started again, click it again for that recording.)
+3. When a set starts on a recorded setup, find it in the Bracket list and click
+   "Put on recording 1" or "Put on recording 2". That saves the time and marks the set
+   "in progress" on start.gg. Putting the next set on the same recording ends the last one.
+   When a set starts on any OTHER setup, click "Put on setup..." and pick the setup.
+   Those aren't recorded, but their times still tell us how long sets take and where they
+   were played. (Picking a recorded setup there is the same as "Put on recording".)
+4. When the set is over, click "Report..." and enter the score. Check the CHARACTERS for
+   each player (they're used in the video titles): the dock fills in what that player
+   usually plays; click a character to remove it, click the "+" after them to add one
+   (someone switched mid-set: add each character they played, up to 3).
+   Reporting sends the score to start.gg AND saves the end time. If the set was never
+   put on a setup, the confirmation asks where it was played (skip it if you don't know).
+   (If someone reports on start.gg instead, the dock notices within about 20 seconds;
+   add the characters afterwards with "Characters..." under "Recent results".
+   "■ Set over" saves the end time by hand.)
+5. "★ Mark" saves a marker any time (great moment, a problem with the recording...).
+6. Mis-click? Click the right button; the editor will see both. Or delete the wrong line
+   in the Timestamps list with its ✕.
+
+Everything else works like start.gg: Call, Start, Report, DQ, and Reset under
+"Recent results" (only if no later set has started).
+
+GOOD TO KNOW
+- First set of the night: start.gg takes about a minute to set up the bracket after the first
+  "Put on recording / setup". A yellow note shows and the list stays on screen. Keep working:
+  timestamps are saved right away and Call / Start / Put on are sent to start.gg when it's back.
+  (Reporting has to wait for that minute.)
+- Wrong score or winner? Reset the set, then Report it again. The timestamps keep the set's
+  original times; pick another setup in the confirmation only if the setup was wrong too.
+- Bracket restarted on start.gg (reseeding for a late arrival)? Sets that were on a recording or
+  setup are taken off automatically within a minute. Put them on again when they are replayed.
+- A yellow "rate limit" note means start.gg asked the dock to slow down; it clears by itself.
+
+
+AFTER THE TOURNAMENT
+--------------------
+Click "Open timestamps folder" in the dock. Copy that folder to the external SSD together
+with both recordings, plus the file player_characters.json from the Super Stream Bros Ultimate folder.
+The timestamps folder contains:
+  Recording 1 chapters.txt / Recording 2 chapters.txt  - one line per set, with the time into
+                                                   that recording, the clock time and the
+                                                   characters ("Swizzy (Terry) vs ...")
+  Setup times.txt                                - every setup: which sets, start - end
+  timestamps.csv / setups.csv                    - everything, opens in Excel
+  log.jsonl / setups.jsonl / characters.json     - the raw logs (keep them)
+
+
+IF SOMETHING GOES WRONG
+-----------------------
+- Dock says "server not reachable": start_dock.bat isn't running. Start it, then right-click
+  the dock > Reload (or just wait a few seconds).
+- "start.gg token not found": run set_token.bat again.
+- "No internet connection to start.gg": timestamps are still saved. Report the sets on
+  start.gg's website when the internet is back.
+- The bracket is the wrong tournament: gear > "Use latest (series link)", or type the slug
+  (the part after start.gg/tournament/) and click "Load slug".
+- Closing the black window stops the dock. Nothing is lost: timestamps are saved as you click.

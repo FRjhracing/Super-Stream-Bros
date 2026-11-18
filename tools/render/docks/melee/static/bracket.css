@@ -1,0 +1,86 @@
+/* Bracket overview page. Shares variables, buttons and badges with dock.css. */
+html, body.bracket-page { height: 100%; }
+body.bracket-page { display: flex; flex-direction: column; padding-bottom: 0; }
+.pad { padding: 12px; }
+.bar .title { flex-direction: row; align-items: baseline; gap: 10px; }
+.bar-actions { flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.groups { display: flex; gap: 4px; flex-wrap: wrap; }
+.groups button.sel { border-color: var(--accent); color: var(--accent); }
+.toggle { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); cursor: pointer; }
+.toggle input { width: auto; }
+
+.board { flex: 1; overflow: auto; padding: 8px; }
+.side { margin-bottom: 14px; }
+.side > h2 { position: sticky; left: 0; margin: 2px 4px 6px; }
+.cols { display: flex; gap: 10px; align-items: flex-start; }
+.col { flex: 0 0 196px; display: flex; flex-direction: column; gap: 8px; }
+.col-head { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
+  padding: 2px 4px; border-bottom: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top8-tag { display: block; color: #ff8a3d; font-weight: 700; font-size: 10px; }
+
+.bset { position: relative; background: var(--box, var(--panel)); border: 1px solid var(--box-line, var(--line)); border-left: 3px solid var(--box-line, var(--line));
+  border-radius: 5px; padding: 4px 6px 5px; cursor: pointer; font-size: 12px; }
+.bset:hover { border-color: var(--accent); }
+.bset.sel { box-shadow: 0 0 0 2px var(--accent); }
+.bset.st-2 { border-left-color: var(--playing); }
+.bset.st-6 { border-left-color: var(--called); }
+.bset.live { border-left-color: var(--live); background: color-mix(in srgb, var(--live) 12%, var(--box, var(--panel))); }
+.bset.done { opacity: .72; }
+.bset.empty { cursor: default; opacity: .55; }
+.bset .top { display: flex; justify-content: space-between; align-items: center; gap: 4px; margin-bottom: 2px; }
+.bset .letter { font-weight: 700; color: var(--accent); min-width: 18px; }
+.bset .top .right { display: flex; gap: 3px; align-items: center; }
+.bset .p { display: grid; grid-template-columns: 1fr auto; gap: 6px; line-height: 1.45; }
+.bset .p span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bset .p.win span, .bset .p.win b { color: var(--accent); font-weight: 600; }
+.bset .p.lose span { color: var(--muted); }
+.bset .p.tbd span { color: var(--muted); font-style: italic; }
+.bset .foot { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+/* View tabs (Full / Winners / Losers), browser style: the selected tab joins the board below. */
+.tabs { display: flex; gap: 4px; padding: 8px 8px 0; border-bottom: 1px solid var(--line); }
+.tabs:empty { display: none; }
+.tabs button { min-height: 42px; padding: 6px 20px; font-size: 14px; font-weight: 600; color: var(--muted);
+  background: color-mix(in srgb, var(--panel) 55%, var(--bg)); border: 1px solid var(--line); border-bottom: none;
+  border-radius: 9px 9px 0 0; margin-bottom: -1px; touch-action: manipulation; }
+.tabs button.sel { color: var(--text); background: var(--panel); border-color: var(--accent);
+  box-shadow: inset 0 3px 0 var(--accent); }
+.tabs button small { font-weight: 400; color: var(--muted); margin-left: 6px; }
+
+/* "Completed sets" tab: big cards, newest first. */
+.done-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.dset { background: var(--box, var(--panel)); border: 1px solid var(--box-line, var(--line)); border-left: 4px solid var(--box-line, var(--line));
+  border-radius: 6px; padding: 10px 12px; font-size: 16px; cursor: pointer; touch-action: manipulation; min-height: 96px; }
+.dset:hover { border-color: var(--accent); }
+.dset.sel { box-shadow: 0 0 0 2px var(--accent); }
+.dset .top { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.dset .letter { font-weight: 700; color: var(--accent); font-size: 16px; }
+.dset .p { display: grid; grid-template-columns: 1fr auto; gap: 8px; line-height: 1.55; }
+.dset .p span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dset .p.win span, .dset .p.win b { color: var(--accent); font-weight: 600; }
+.dset .p.lose span { color: var(--muted); }
+
+/* Set actions window (tap a set). */
+dialog.set-dialog { width: min(460px, 94vw); padding: 14px; border-radius: 10px; }
+.set-dialog .sd-head { display: flex; align-items: center; gap: 8px; font-size: 14px; min-width: 0; }
+.set-dialog .letter { color: var(--accent); font-size: 20px; }
+.set-dialog .sd-close { min-width: 44px; min-height: 44px; font-size: 18px; }
+.sd-players { margin: 6px 0 4px; }
+.sd-players .p { display: grid; grid-template-columns: 2.4em 1fr auto; gap: 8px; align-items: baseline; font-size: 19px; line-height: 1.6; }
+.sd-players .p i { color: var(--muted); font-size: 13px; text-align: right; }
+.sd-players .p span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd-players .p.win span, .sd-players .p.win b { color: var(--accent); font-weight: 600; }
+.sd-players .p.tbd span { color: var(--muted); font-style: italic; }
+.sd-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.sd-buttons button { min-height: 56px; font-size: 16px; touch-action: manipulation; }
+.sd-buttons button.wide { grid-column: 1 / -1; }
+
+/* Touch screen: bigger set boxes and no tap delay. */
+.bset { touch-action: manipulation; }
+@media (pointer: coarse) {
+  .col { flex-basis: 230px; }
+  .bset { font-size: 14px; padding: 8px 9px 9px; }
+  .bset .p { line-height: 1.6; }
+  .toggle { font-size: 14px; min-height: 40px; }
+  #btn-refresh { min-width: 44px; min-height: 44px; }
+}

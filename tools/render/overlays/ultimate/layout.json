@@ -1,0 +1,56 @@
+{
+  "_note": "Generic sample scoreboard (Super Stream Bros). All boxes are [x1, y1, x2, y2] in 1920x1080 pixels; circles are [cx, cy, r]. make_frame.py draws the shapes from this file (frame.png), ultimate_overlay.py puts the text and pictures in the same boxes. Change colours/positions here, then re-run make_frame.py. Colours are [r, g, b].",
+  "canvas": [1920, 1080],
+
+  "colors": {
+    "plate_top": [58, 62, 70],
+    "plate_bottom": [34, 37, 43],
+    "plate_rim": [96, 102, 114],
+    "bar": [24, 26, 30],
+    "bar_edge": [16, 17, 20],
+    "score": [84, 90, 102],
+    "score_edge": [60, 64, 74],
+    "name_text": [255, 255, 255],
+    "score_text": [255, 255, 255],
+    "sub_text": [190, 196, 208],
+    "mark_text": [255, 255, 255]
+  },
+
+  "glow": {
+    "_note": "alpha 0 = no glow. For a glow: a colour and alpha around 100.",
+    "color": [255, 255, 255],
+    "alpha": 0,
+    "spread": 6,
+    "blur": 12
+  },
+
+  "logo": {"cx": 960, "top": 4, "width": 330},
+
+  "p1": {
+    "plate": [24, 31, 790, 127],
+    "pfp": [66, 79, 38],
+    "name": [112, 41, 694, 95],
+    "score": [702, 41, 780, 95],
+    "sub": [112, 99, 694, 125],
+    "mark": [702, 99, 780, 125]
+  },
+  "p2": {
+    "plate": [1130, 31, 1896, 127],
+    "pfp": [1854, 79, 38],
+    "name": [1226, 41, 1808, 95],
+    "score": [1140, 41, 1218, 95],
+    "sub": [1226, 99, 1808, 125],
+    "mark": [1140, 99, 1218, 125]
+  },
+
+  "radius": {"plate": 18, "bar": 14, "score": 12},
+
+  "text": {
+    "name_size": 40,
+    "keep_prefix": 0.7,
+    "min_scale": 0.5,
+    "score_size": 46,
+    "sub_size": 24,
+    "mark_size": 24
+  }
+}

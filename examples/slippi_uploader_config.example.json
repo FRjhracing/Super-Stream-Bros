@@ -1,0 +1,13 @@
+{
+  "_about": "slippi_uploader.py writes this itself (package root) the first time it sees each flash drive label.",
+  "drives": {
+    "label:setupone": {
+      "label": "SETUPONE",
+      "folder": "Main Setup"
+    },
+    "label:setuptwo": {
+      "label": "SETUPTWO",
+      "folder": "Big Tv"
+    }
+  }
+}

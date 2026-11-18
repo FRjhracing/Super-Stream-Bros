@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Stream Bros - Home</title>
+<link rel="stylesheet" href="/static/dock.css">
+</head>
+<body>
+<header class="bar">
+  <div class="title">
+    <strong id="t-name">Super Stream Bros - Home</strong>
+    <select id="event-select" class="hidden" title="Melee event"></select>
+  </div>
+  <div class="bar-actions">
+    <span id="season-badge" class="badge season hidden" title="Seasonal theme on (⚙ to change)"></span>
+    <span id="updated" class="muted"></span>
+    <button id="btn-bracket" title="Open SSB:Full Bracket (http://127.0.0.1:8765/bracket)">⊞</button>
+    <button id="btn-active" title="Open SSB:Active Bracket (http://127.0.0.1:8765/active)">▤</button>
+    <button id="btn-refresh" title="Refresh bracket">↻</button>
+    <button id="btn-settings" title="Tournament settings">⚙</button>
+  </div>
+</header>
+<div id="status" class="status hidden"></div>
+
+<section id="settings" class="panel hidden">
+  <label>Tournament slug <span class="muted">(the part after start.gg/tournament/; empty = follow "shortLink" in dock_config.json)</span>
+    <input id="slug-input" placeholder="your-weekly-12">
+  </label>
+  <div class="row">
+    <button id="btn-latest" title="Follow your series' start.gg short link (shortLink in dock_config.json) to its newest tournament">Use latest (series link)</button>
+    <button id="btn-slug">Load slug</button>
+  </div>
+  <label>Our stream on start.gg <span class="muted">("Put on stream" assigns sets to it)</span>
+    <select id="stream-select"></select>
+  </label>
+  <label>Number of setups <span class="muted">(set at the start of the night; "Put on setup" time-stamps sets)</span>
+    <input id="setup-count" type="number" min="1" max="16" class="narrow">
+  </label>
+  <div id="setup-names" class="setup-names"></div>
+  <label>Setup on stream <span class="muted">("Put on stream" also puts the set on it)</span>
+    <select id="stream-setup"></select>
+  </label>
+  <label>Seasonal theme <span class="muted">(folders in the themes folder; changes the stream overlay)</span>
+    <select id="season-select"></select>
+  </label>
+  <div class="row season-opts">
+    <label class="check"><input type="checkbox" id="season-rounds"> Themed round names</label>
+    <label class="check"><input type="checkbox" id="season-overlay"> Themed overlay graphic</label>
+  </div>
+  <label>Dock colors</label>
+  <div id="theme-row" class="theme-row"></div>
+  <div class="row theme-custom">
+    <label>Accent <input type="color" id="theme-accent"></label>
+    <label>Panel <input type="color" id="theme-bg"></label>
+  </div>
+  <div class="row theme-custom">
+    <label title="Set boxes in the bracket overview (⊞)">Bracket boxes <input type="color" id="theme-box"></label>
+    <button id="theme-box-reset" title="Bracket boxes follow the panel color again">Same as panel</button>
+  </div>
+  <p class="muted small" id="out-dir"></p>
+</section>
+
+<section class="panel" id="stream-panel">
+  <h2>On stream <span id="stream-set" class="muted small"></span></h2>
+  <div class="players">
+    <div class="player" data-p="1"></div>
+    <button id="btn-swap" class="swap" title="Swap sides">⇄</button>
+    <div class="player" data-p="2"></div>
+  </div>
+  <div class="row">
+    <input id="round-input" placeholder="Round (e.g. Winners Final)">
+    <input id="bo-input" class="narrow" placeholder="Bo5">
+  </div>
+  <div class="row">
+    <button id="btn-update" class="accent">Update overlay</button>
+    <button id="btn-report-stream">Report…</button>
+    <button id="btn-clear">Clear</button>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Bracket <span class="muted small" id="open-count"></span></h2>
+  <div id="open-sets" class="sets"><p class="muted">Loading…</p></div>
+</section>
+
+<section class="panel">
+  <details>
+    <summary><h2 class="inline">Recent results</h2></summary>
+    <div id="done-sets" class="sets"></div>
+  </details>
+</section>
+
+<dialog id="char-dialog">
+  <div class="dlg-head"><strong id="char-title">Character</strong><button data-close>✕</button></div>
+  <div id="char-grid" class="char-grid"></div>
+  <div id="color-row" class="color-row"></div>
+  <div class="row"><button id="char-none">No character</button><button data-close class="accent">Done</button></div>
+</dialog>
+
+<!-- Report + confirm dialogs are added by common.js (shared with the bracket page). -->
+<script src="/static/common.js"></script>
+<script src="/static/dock.js"></script>
+</body>
+</html>

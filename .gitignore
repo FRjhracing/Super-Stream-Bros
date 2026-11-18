@@ -1,0 +1,41 @@
+# Third-party tools: installed per PC (guides\01), never committed
+tools/ffmpeg/*
+!tools/ffmpeg/README.txt
+tools/rclone/*
+!tools/rclone/README.txt
+tools/render/slippi_playback/*
+!tools/render/slippi_playback/README.txt
+
+# Per-PC settings and secrets
+machine_settings.json
+CLAUDE.md
+client_secret*.json
+
+# Dock runtime files (settings, state, overlay output, logs of real events)
+tools/render/docks/*/dock_config.json
+tools/render/docks/*/dock_state.json
+tools/render/docks/*/setup_state.json
+tools/render/docks/*/player_prefs.json
+tools/render/docks/*/player_characters.json
+tools/render/docks/*/output/
+tools/render/docks/*/timestamps/
+*.zip
+
+# Art you add that isn't yours to share (stock icons, fonts); keep the instructions
+tools/render/docks/melee/assets/stock_icons/*
+!tools/render/docks/melee/assets/stock_icons/PROVIDE YOUR OWN.md
+tools/render/docks/melee/assets/fonts/*
+!tools/render/docks/melee/assets/fonts/PROVIDE YOUR OWN.md
+*.otf
+*.ttf
+
+# Generated
+tools/obs/generated/
+__pycache__/
+*.pyc
+
+# Media and replays
+*.mp4
+*.mkv
+*.slp
+*.iso

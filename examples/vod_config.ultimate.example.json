@@ -1,0 +1,57 @@
+{
+  "_about": "PROTOCOL #59 Ultimate's config (trimmed to a few hand-fixed sets) as an example.",
+  "tournament": "protocol-59",
+  "title": "PROTOCOL #59",
+  "game": "Ultimate",
+  "account": "sova",
+  "recordings": {
+    "1": "{ssd}/UltimateRecordings/Protocol #59/2026-11-09 19-20-23.mp4"
+  },
+  "recording_names": {
+    "1": "Main 1"
+  },
+  "dock": "dock",
+  "player_characters": "{ssd}/UltimateRecordings/player_characters.json",
+  "pad_before_s": 15,
+  "pad_after_s": 15,
+  "sets": {
+    "_notes": "Found by watching the recording (2026-11-10). R, BB, BC were played on Main 1 but never put on the recording in the dock. BA's dock end was the report; BB game 1 starts 2:29:40.",
+    "R": {
+      "rec": "1",
+      "start": "0:48:40",
+      "end": "0:58:40",
+      "chars": {
+        "Casual": [
+          "Dark Pit"
+        ],
+        "Soaring Xsylem": [
+          "Sora"
+        ]
+      },
+      "note": "not in the dock log; Small Battlefield games 0:50-0:59, Sora results ~0:59; end trimmed to 58:40 by the user 2026-11-11 (extended win screen)"
+    },
+    "M": {
+      "chars": {
+        "ILMW | leolee": [
+          "Wolf",
+          "R.O.B."
+        ],
+        "aceofdarts68": [
+          "Min Min"
+        ]
+      },
+      "note": "characters from the game (name tags II / LXVIII)"
+    },
+    "U": {
+      "chars": {
+        "ILMW | leolee": [
+          "R.O.B."
+        ],
+        "NSG | Mr tot": [
+          "Roy"
+        ]
+      },
+      "note": "characters from the stadium board"
+    }
+  }
+}
